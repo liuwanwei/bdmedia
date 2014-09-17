@@ -14,3 +14,6 @@ bdmedia
 
 ***bus.apk***
 安卓客户端
+
+***index.php***
+管理入口
