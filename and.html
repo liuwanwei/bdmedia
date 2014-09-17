@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="language" content="en" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="telephone=no" name="format-detection" />
+	<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" href="./css/font-awesome-4.1.0/css/font-awesome.min.css"> 
+	<script type="text/javascript" src="./js/jquery.lazyload.min.js"></script>
+	<title></title>
+
+	<style type="text/css">
+		body,section,header,div,video
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		video
+		{
+			display: block;
+			/*min-width: 320px;*/
+			width: 100%;
+			/*height: 320px;*/
+			/*display: none;*/
+		}
+		body
+		{
+			background: rgb(242,242,242);
+			-webkit-overflow-scrolling: touch;
+		}
+		section
+		{
+			display: block;
+			position: relative;
+			margin-bottom: 15px;
+			padding: 0px;
+			background: #FFFFFF;
+			border-bottom: 1px solid rgba(227, 227, 227, 0.9);
+		}
+		section header
+		{
+			padding: 5px;
+			line-height: 25px;
+			font-size: 1em;
+			color: #000;
+			display: none;
+		}
+		section footer
+		{
+			margin:0px 0px;
+			padding: 20px 20px;
+			font-size: 1.1em;
+			color: #555;
+			line-height: 20px;
+			/*min-height: 40px;*/
+		}
+		section .item-video
+		{
+			min-height: 320px;
+			display: block;
+			position: relative;
+		}
+		section .item-video>img{
+			display: block;
+			width: 100%;
+		}
+		section .item-video a
+		{
+			position: absolute;
+			top: 40%;
+			left: 38%;
+			display: block;
+			width: 97px;
+			height: 97px;
+			opacity:0.6;
+			background: url(./images/bus_play.png);
+			background-repeat: no-repeat;
+			background-size: 100%;
+			text-decoration: none;
+		}
+		section .item-video a:-webkit-any-link:active 
+		{
+			color: rgba(242,242,242,1);/*-webkit-activelink;*/
+
+		}
+		.title-mark{
+			display: block;
+			position: absolute;
+			top: 5px;
+			left: 0px;
+			width: 55px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			border-top-right-radius: 30px;
+			border-bottom-right-radius: 30px;
+			color: rgba(255, 255, 255, 1.0);
+		}
+		.title-mark.gy{
+			background: rgba(221, 20, 58, 1.0);
+		}
+		.title-mark.gg{
+			background: rgba(58, 156, 239, 1.0);
+		}
+		.load-container{
+			position: absolute;
+			z-index: 1000;
+			height: 2em;
+			width: 4em;
+			top: 40%;
+			left: 45%;
+			display: none;
+		}
+		.load1 .loader,
+		.load1 .loader:before,
+		.load1 .loader:after {
+		  background: #FFF;
+		  -webkit-animation: load1 1s infinite ease-in-out;
+		  animation: load1 1s infinite ease-in-out;
+		  width: 0.8em;
+		  height: 2em;
+		}
+		.load1 .loader:before,
+		.load1 .loader:after {
+		  position: absolute;
+		  top: 0;
+		  content: '';
+		}
+		.load1 .loader:before {
+		  left: -1.5em;
+		  -webkit-animation-delay: -0.32s;
+		  animation-delay: -0.32s;
+		}
+		.load1 .loader {
+		  text-indent: -9999em;
+		  margin: 2em auto;
+		  position: relative;
+		  font-size: 11px;
+		  -webkit-animation-delay: -0.16s;
+		  animation-delay: -0.16s;
+		}
+		.load1 .loader:after {
+		  left: 1.5em;
+		}
+		@-webkit-keyframes load1 {
+		  0%,
+		  80%,
+		  100% {
+		    box-shadow: 0 0 #FFF;
+		    height: 1em;
+		  }
+		  40% {
+		    box-shadow: 0 -1em #ffffff;
+		    height: 2em;
+		  }
+		}
+		@keyframes load1 {
+		  0%,
+		  80%,
+		  100% {
+		    box-shadow: 0 0 #FFF;
+		    height: 1em;
+		  }
+		  40% {
+		    box-shadow: 0 -1em #ffffff;
+		    height: 2em;
+		  }
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- <section>
+		<header>$value->title</header>
+		<div class="item-video" data-paused="false" id = "'video'.$key">
+			<a class="fa fa-play-circle-o" data-video-url="$value->url"></a>
+			<img src="$value->imgUrl"> 
+		</div>
+		<footer>
+			$value->description
+		</footer>
+	</section> -->
+
+	<script type="text/javascript">
+		$(function(){
+			$.getJSON("./upload/data/videoSource.json", function (result){
+				var strContent = "";
+				if (result) {
+					for(var i in result) {
+						var item = result[i];
+						strContent += '<section>';
+						strContent += '<header>'+item["title"]+'</header>';
+						strContent += '<div class="item-video" data-paused="false" id = "video'+i+'">';
+						strContent += '<a data-video-url="'+item["url"]+'"></a>';
+						// strContent +=	'<img src="'+item["imgUrl"]+'">';
+						strContent += '<video preload="none" poster="'+item["imgUrl"]+'" src="'+item["url"]+'"></video>';
+						strContent += '</div>';
+						strContent += '<footer>';
+						strContent +=	item["description"];
+						strContent += '</footer>';
+						if (item["mark"] != null) {
+							if (item["mark"] === "公益") {
+								strContent += '<div class="title-mark gy">'+item["mark"]+'</div>'
+							} else if(item["mark"] === "广告") {
+								strContent += '<div class="title-mark gg">'+item["mark"]+'</div>'
+							}
+						}
+					 	strContent += '</section> ';
+					}
+
+					$("body").append(strContent);
+
+					bindingData2();
+					bindingData();
+				}
+			});
+
+			function bindingData2()
+			{
+				$(".item-video").find('video').click(function(){
+					var pauseVideo = $(".item-video[data-paused=true]");
+
+					if (pauseVideo.length > 0) {
+						var video = pauseVideo.find("video");
+						
+						video.each(function(){
+							var videoItem = $(this);
+							if (!videoItem[0].paused) {
+								videoItem[0].pause();
+								videoItem.parent().attr('data-paused', 'false');
+								videoItem.removeAttr('controls');
+							}
+						});
+
+						pauseVideo.find("a").show();
+
+					}
+
+					
+					$(this).parent().attr('data-paused', 'true');
+
+					var nvideo = $(this);
+
+					if (nvideo[0].paused) {
+						nvideo[0].play();
+						nvideo.attr('controls', 'controls');
+					}
+					$(this).parent().find("a").hide();
+
+						
+				});
+			}
+
+			function bindingData()
+			{
+				$(".item-video").find('a').click(function(){
+					var pauseVideo = $(".item-video[data-paused=true]");
+
+					if (pauseVideo.length > 0) {
+						var video = pauseVideo.find("video");
+						
+						video.each(function(){
+							var videoItem = $(this);
+							if (!videoItem[0].paused) {
+								videoItem[0].pause();
+								videoItem.parent().attr('data-paused', 'false');
+								videoItem.removeAttr('controls');
+							}
+						});
+
+						pauseVideo.find("a").show();
+
+					}
+
+					$(this).parent().attr('data-paused', 'true');
+
+					var nvideo = $(this).parent().find("video");
+
+					if (nvideo[0].paused) {
+						nvideo[0].play();
+						nvideo.attr('controls', 'controls');
+					}
+					$(this).hide();
+
+						
+				});
+			}
+
+
+	});
+	
+	function onVideoPlay(videoId) {
+		// $(videoId).find('video')[0].play();
+		// alert(document.getElementById(videoId));
+	    // $("#"+videoId).find('video')[0].play();
+	    setTimeout(function() {
+			$(videoId).find('video')[0].play();
+		}, 800);
+	}
+	</script>
+</body>
+</html>

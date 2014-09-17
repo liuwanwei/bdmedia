@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="language" content="en" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="telephone=no" name="format-detection" />
+	<title></title>
+
+	<style type="text/css">
+		body,section,header,div,video
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		body
+		{
+			background: rgb(242,242,242);
+			-webkit-overflow-scrolling: touch;
+			-webkit-touch-callout: none;
+		}
+
+		a
+		{
+			text-decoration: none;
+		}
+
+		body, html,#download-msg,#iPhone{width: 100%;height: 100%;overflow: hidden;margin:0px;}
+		#download-msg {
+			display: none;
+			-webkit-box-orient:horizontal;
+			-webkit-box-pack: center;
+		  	-webkit-box-align: center;
+		}
+		#download-msg>a {
+			display: block;
+			width: 250px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			border:1px solid #000;
+			padding: 0px 10px;
+			outline: none;
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 1.3em;
+			border-radius: 4px;
+			border: 1px solid rgb(238, 40, 40);
+			background: rgba(238, 40, 40, 1);
+			box-shadow: 0 3px 3px rgba(0 ,0, 0, 0.3);
+		}
+		#iPhone{
+			display: none;
+			-webkit-box-orient:horizontal;
+			-webkit-box-pack: center;
+		  	-webkit-box-align: center;
+		}
+		#iPhone>a{
+			display: block;
+			min-width: 250px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			border:1px solid #000;
+			padding: 0px 10px;
+			outline: none;
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 1.3em;
+			border-radius: 4px;
+			border: 1px solid rgb(238, 40, 40);
+			background: rgba(238, 40, 40, 1);
+			box-shadow: 0 3px 3px rgba(0 ,0, 0, 0.3);
+		}
+
+	</style>
+</head>
+
+<body>
+	<div id="download-msg">
+		<a href="bus.apk">android 客户端下载</a>
+	</div>
+	<div id="iPhone">
+		<a>暂不支持iPhone手机下载客户端</a>
+	</div>
+	<script type="text/javascript">
+		var browser={
+		versions:function(){
+			var u = navigator.userAgent, app = navigator.appVersion;
+			return { //移动终端浏览器版本信息
+				trident: u.indexOf('Trident') > -1, //IE内核
+				presto: u.indexOf('Presto') > -1, //opera内核
+				webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+				gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+				mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+				ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+				android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+				iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+				iPad: u.indexOf('iPad') > -1, //是否iPad
+				webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			};
+		}(),
+		language:(navigator.browserLanguage || navigator.language).toLowerCase()
+	}
+
+	if (true == browser.versions.iPhone) {
+		document.getElementById("iPhone").style.cssText="display:-webkit-box";
+		document.getElementById("download-msg").style.cssText="display:none";
+	}else {
+		document.getElementById("iPhone").style.cssText="display:none;";
+		document.getElementById("download-msg").style.cssText="display:-webkit-box;";
+	} 
+	</script>
+</body>
+</html>

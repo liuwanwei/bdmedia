@@ -1,0 +1,297 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="language" content="en" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta content="telephone=no" name="format-detection" />
+	<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" href="./css/font-awesome-4.1.0/css/font-awesome.min.css"> 
+	<script type="text/javascript" src="./js/jquery.lazyload.min.js"></script>
+	<title></title>
+
+	<style type="text/css">
+		body,section,header,div,video
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		video
+		{
+			display: block;
+			width: 100%;
+			/*height: 320px;*/
+		}
+		body
+		{
+			background: rgb(242,242,242);
+			-webkit-overflow-scrolling: touch;
+		}
+		section
+		{
+			position: relative;
+			margin-bottom: 15px;
+			padding: 0px 0px 5px 0px;
+			background: #FFFFFF;
+			border-bottom: rgba(181,181,181);
+		}
+		section header
+		{
+			padding: 5px;
+			line-height: 25px;
+			font-size: 1em;
+			color: #000;
+			display: none;
+		}
+		section footer
+		{
+			margin:0px 0px;
+			padding: 0px 5px;
+			font-size: 0.8em;
+			color: #333;
+			line-height: 20px;
+			min-height: 40px;
+		}
+		section .item-video
+		{
+			min-height: 320px;
+			display: block;
+			position: relative;
+		}
+		section .item-video>img{
+			display: block;
+			width: 100%;
+		}
+		section .item-video a
+		{
+			position: absolute;
+			font-size: 4em;
+			color: #FFFFFF;
+			top: 40%;
+			left: 45%;
+			text-decoration: none;
+		}
+		section .item-video a:-webkit-any-link:active 
+		{
+			color: rgba(242,242,242,1);/*-webkit-activelink;*/
+
+		}
+		.title-mark{
+			display: block;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 64px;
+			height: 30px;
+			line-height: 30px;
+			padding-left: 5px;
+			background: url(./images/index_label.png);
+			background-repeat: no-repeat;
+			background-size: 64px 30px;
+			color: rgba(255, 255, 255, 1.0);
+		}
+		.load-container{
+			position: absolute;
+			z-index: 1000;
+			height: 2em;
+			width: 4em;
+			top: 40%;
+			left: 45%;
+			display: none;
+		}
+		.load1 .loader,
+		.load1 .loader:before,
+		.load1 .loader:after {
+		  background: #FFF;
+		  -webkit-animation: load1 1s infinite ease-in-out;
+		  animation: load1 1s infinite ease-in-out;
+		  width: 0.8em;
+		  height: 2em;
+		}
+		.load1 .loader:before,
+		.load1 .loader:after {
+		  position: absolute;
+		  top: 0;
+		  content: '';
+		}
+		.load1 .loader:before {
+		  left: -1.5em;
+		  -webkit-animation-delay: -0.32s;
+		  animation-delay: -0.32s;
+		}
+		.load1 .loader {
+		  text-indent: -9999em;
+		  margin: 2em auto;
+		  position: relative;
+		  font-size: 11px;
+		  -webkit-animation-delay: -0.16s;
+		  animation-delay: -0.16s;
+		}
+		.load1 .loader:after {
+		  left: 1.5em;
+		}
+		@-webkit-keyframes load1 {
+		  0%,
+		  80%,
+		  100% {
+		    box-shadow: 0 0 #FFF;
+		    height: 1em;
+		  }
+		  40% {
+		    box-shadow: 0 -1em #ffffff;
+		    height: 2em;
+		  }
+		}
+		@keyframes load1 {
+		  0%,
+		  80%,
+		  100% {
+		    box-shadow: 0 0 #FFF;
+		    height: 1em;
+		  }
+		  40% {
+		    box-shadow: 0 -1em #ffffff;
+		    height: 2em;
+		  }
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- <section>
+		<header>$value->title</header>
+		<div class="item-video" data-paused="false" id = "'video'.$key">
+			<a class="fa fa-play-circle-o" data-video-url="$value->url"></a>
+			<img src="$value->imgUrl"> 
+		</div>
+		<footer>
+			$value->description
+		</footer>
+	</section> -->
+<button id="btnplay">播放</button>
+
+<video id="video" src="../upload/data/video/苍井空天猫开店.mp4" width="320" height="320" controls>
+    don't support html5
+</video>
+
+	<script type="text/javascript">
+
+	// document.getElementById("btnplay").addEventListener("click", function () {
+	// 	window.Video.playVideo();
+	// }, false);
+$("#btnplay").click(function(){
+	// window.Video.playVideo();
+	autoplay();
+});
+
+	 function autoplay() {
+        var video = document.getElementById("video");
+        if (video.paused) 
+		  video.play(); 
+		else 
+		  video.pause(); 
+    }
+
+		/*$(function(){
+			$.getJSON("./upload/data/videoSource.json", function (result){
+				var strContent = "";
+				if (result) {
+					for(var i in result) {
+						var item = result[i];
+						strContent += '<section>';
+						strContent += '<header>'+item["title"]+'</header>';
+						strContent += '<div class="item-video" data-paused="false" id = "video'+i+'">';
+						strContent +=	'<a class="fa fa-play-circle-o" data-video-url="'+item["url"]+'"></a>';
+						strContent +=	'<img src="'+item["imgUrl"]+'">';
+						strContent += '</div>';
+						strContent += '<footer>';
+						strContent +=	item["description"];
+						strContent += '</footer>';
+						if (item["mark"] != null) {
+							strContent += '<div class="title-mark">'+item["mark"]+'</div>'
+						}
+					 	strContent += '</section> ';
+					}
+
+					$("body").append(strContent);
+
+					bindingData();
+				}
+			});
+
+			function bindingData()
+			{
+				$(".item-video").find('a').click(function(){
+					var img = $(this).parent().find('img');
+					var pauseVideo = $(".item-video[data-paused=true]");
+					var playing = false;
+
+					pauseVideo.find("video").remove();
+					pauseVideo.find("img").show();
+					pauseVideo.find("a").show();
+					pauseVideo.find('.load-container').remove();
+
+					var video = $("<video>");
+						video.attr('preload', 'none');
+						video.attr('poster', img.attr('src'));
+						video.attr('webkit-playsinline','webkit-playsinline');
+						video.attr('src',this.dataset.videoUrl+'?t='+ (new Date()).getTime());
+						$(this).parent().attr('data-paused', 'true');
+
+						var loader;
+						video[0].addEventListener("loadstart", function(){
+							loader = $('<div class="load-container load1"><div class="loader">Loading...</div></div>');
+							$(this).parent().append(loader);
+							loader.show();
+						},false);
+
+						video[0].addEventListener("canplay", function(){
+							img.hide();
+							loader.hide();
+							video.show();
+							video.attr('controls', 'controls');
+						}, false);
+
+						video[0].addEventListener("playing", function() {
+							playing = true;
+						}, false);
+						// video[0].autoplay = true;
+						$(this).parent().append(video);
+						$(this).hide();
+
+						// var videoTime = setInterval(function(){
+						// 	if (playing === false) {
+						// 		video[0].play();
+						// 	}else{
+
+						// 		if (videoTime !== null)
+						// 		clearInterval(videoTime);
+						// 	}
+						// }, 800);
+
+						setTimeout(function() {
+							video[0].play();
+						}, 800);
+						// alert($(this).parent().attr("id"));
+					// 	var videoId = $(this).parent().attr("id");
+					// window.Video.playVideo(videoId);
+				});
+			}
+
+
+	});
+	
+	function onVideoPlay(videoId) {
+		// $(videoId).find('video')[0].play();
+		// alert(document.getElementById(videoId));
+	    // $("#"+videoId).find('video')[0].play();
+	    setTimeout(function() {
+			$(videoId).find('video')[0].play();
+		}, 800);
+	}*/
+	</script>
+</body>
+</html>
